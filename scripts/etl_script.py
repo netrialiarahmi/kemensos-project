@@ -41,10 +41,6 @@ def preprocess_and_save(df, filename, keyword):
     # Upsert to Supabase
     upsert_to_supabase(df)
 
-def clean_text(text):
-    # Implement your text cleaning logic here if needed
-    return text
-
 def upsert_to_supabase(df):
     url: str = os.getenv("SUPABASE_URL")
     key: str = os.getenv("SUPABASE_KEY")
