@@ -11,7 +11,7 @@ import pandas as pd
 import os
 from datetime import datetime, timedelta
 from supabase import create_client, Client
-from scripts.sentiment_analysis_using_indobert import analyze_sentiment
+from sentiment_analysis_using_indobert import analyze_sentiment
 
 def scrape_twitter_data(search_keywords, filename, limit, twitter_auth_token):
     for keyword in search_keywords:
