@@ -24,17 +24,17 @@ def remove_duplicates_and_add_column(filename, keyword):
     file_path = f"data/{filename}"
     df = pd.read_csv(file_path, delimiter=",")
     print(f"Columns in scraped data: {df.columns.tolist()}")
-    if 'text' not in df.columns:
-        raise KeyError("The column 'text' was not found in the scraped data.")
+    if 'full_text' not in df.columns:
+        raise KeyError("The column 'full_text' was not found in the scraped data.")
     df['jenis_program'] = keyword
     df.drop_duplicates(inplace=True)
     preprocess_and_save(df, filename, keyword)
 
 def preprocess_and_save(df, filename, keyword):
     # Sentiment analysis without cleaning
-    df['sentiment'] = df['text'].apply(analyze_sentiment)
+    df['sentiment'] = df['full_text'].apply(analyze_sentiment)
     # Drop unnecessary columns
-    df = df[['text', 'sentiment', 'jenis_program']]
+    df = df[['full_text', 'sentiment', 'jenis_program']]
     # Save to CSV
     output_filename = f'data/scrapped_{filename.split(".")[0]}_{keyword.replace(" ", "_")}.csv'
     df.to_csv(output_filename, index=False)
@@ -59,7 +59,6 @@ def upsert_to_supabase(df):
 first_day_of_month = datetime.today().replace(day=1).strftime('%Y-%m-%d')
 today = datetime.today().strftime('%Y-%m-%d')
 
-# Keyword list with dynamic dates
 # Keyword list with dynamic dates
 search_keywords = [
     f'PKH lang:id since:{first_day_of_month} until:{today}',
